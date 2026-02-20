@@ -1,6 +1,3 @@
-git clone https://github.com/mindsetforge20268-netizen/MF-Price-Tracker.git
-cd MF-Price-Tracker
-
 # 1. Use a lightweight base image (Python 3.11 as an example)
 FROM python:3.11-slim
 
