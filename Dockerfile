@@ -1,28 +1,20 @@
-# 1. Use a lightweight base image (Python 3.11 as an example)
+# 1. Use a lightweight base image
 FROM python:3.11-slim
 
-# 2. Set the working directory inside the container
+# 2. Set the working directory
 WORKDIR /app
 
-# 3. Install system dependencies (e.g., if you need git or specialized tools)
+# 3. Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# 4. Copy ONLY the requirements first (optimizes Docker caching)
+# 4. Copy requirements and install
 COPY requirements.txt .
-
-# 5. Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Copy the rest of your GitHub repository code into the container
+# 5. Copy the rest of your GitHub code
 COPY . .
 
-# 7. The command to run your app
+# 6. The command to run your app (This should be the LAST line)
 CMD ["python", "main.py"]
-
-# The '.' at the end tells Docker to look in the current folder for the Dockerfile
-docker build -t mf-price-tracker .
-
-# Run the container
-docker run -d --name tracker-instance mf-price-tracker
